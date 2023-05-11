@@ -23,4 +23,4 @@
 
 <!--Without any value inside button,
 default value will be what 'slot' has defined. But if with text inside 'Button' fallback text won't display-->
-<Button></Button>
+<Button size="small" shadow>Button Text</Button>
