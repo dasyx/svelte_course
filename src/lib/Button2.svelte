@@ -1,17 +1,20 @@
 <script>
-  /* values assigned to variables above are default values */
-  /* undefined are here so that values are not required, which can avoid warnings if don't pass them */
   export let size = "small";
   export let shadow = false;
   export let bgColor = undefined;
   export let textColor = undefined;
-  /* code above will override default values in CSS */
-  /*style:--buttonBgColor={bgColor}*/
-  /*style:--buttonTextColor={textColor}*/
+  export let disabled = false;
+
   let isLeftHovered;
 </script>
 
+<!--in code above (curly braces), we are passing props to our button (in app.svelte)-->
+<!--we can use whether disabled (or {disabled} ) or spead operator to get all unused props - read docs about restProps - being passed as active props in app.svelte-->
+<!--{...$$restProps} // add in button props instead of disabled value-->
+
 <button
+  on:click
+  disabled={disabled}
   style:background-color={bgColor}
   style:color={textColor}
   class:size-lg={size === "large"}
@@ -19,8 +22,7 @@
   class:has-left={$$slots.leftContent}
   class:shadow
 >
-  <!--slot "leftContent" is a named slot, it can be populated in a component-->
-  <!--Using slot props-->
+
   {#if $$slots.leftContent}
     <div
       class="left-content"
@@ -30,10 +32,9 @@
       <slot name="leftContent" />
     </div>
   {/if}
-  <slot isLeftHovered={isLeftHovered}>Fallback</slot>
+  <slot {isLeftHovered}>Fallback</slot>
 </button>
 
-<!-- <button class={size === 'large' ? 'size-lg' : 'size-sm'}></button> -->
 
 <style lang="scss">
   button {
@@ -49,6 +50,10 @@
     .left-content {
       margin-right: 10px;
       width: 20px;
+    }
+    &:disabled {
+        opacity: .8;
+        cursor: not-allowed;
     }
     &:hover {
       background-image: linear-gradient(rgba(0, 0, 0, 0.4) 0 0);
