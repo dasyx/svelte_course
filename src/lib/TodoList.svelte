@@ -9,3 +9,9 @@
     <li>{number} - {todo.title}</li>
   {/each}
 </ul>
+
+<style lang="scss">
+  li {
+    color: variables.$color;
+  }
+</style>
